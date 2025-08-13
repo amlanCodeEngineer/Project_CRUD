@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD | Netflix Style</title>
+    <link rel="stylesheet" href="/public/styles/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#141414] text-white font-poppins min-h-screen p-6 md:p-10">
+
+    <!-- Navigation -->
+    <div class="mb-8 flex justify-between items-center flex-wrap">
+      <h1 class="text-3xl font-bold tracking-tight mb-4 md:mb-0 text-[#E50914]">All Users</h1>
+      <a href="/" 
+         class="inline-flex items-center gap-2 px-4 py-2 bg-[#E50914] text-white text-sm font-medium rounded-lg hover:bg-red-700 transition focus:ring focus:ring-[#E50914]/40">
+        ➕ Create User
+      </a>
+    </div>
+
+    <!-- Users Grid -->
+    <div class="users grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <% users.forEach(function(user){ %>
+        <div class="user bg-[#1A1A1A] rounded-xl shadow-md transition transform hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-500/50 flex flex-col overflow-hidden">
+
+          <!-- Image -->
+          <div class="w-full flex-1 overflow-hidden rounded-t-xl">
+            <img class="w-full h-80 object-cover object-center transition-transform duration-300 hover:scale-105" 
+                 src="<%= user.imageURL %>" alt="<%= user.name %>" />
+          </div>
+
+          <!-- Info Panel -->
+          <div class="p-4 flex flex-col gap-2 bg-[#1A1A1A]">
+            <h3 class="text-xl tracking-tight font-bold text-white"><%= user.name %></h3>
+            <h5 class="text-gray-400 text-sm truncate opacity-90"><%= user.email %></h5>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-3">
+              <!-- Edit Button -->
+              <a href="/edit/<%= user._id %>" 
+                 class="flex-1 text-center px-3 py-2 bg-[#E50914] text-white rounded-lg text-sm font-semibold shadow-md hover:shadow-lg hover:shadow-[#E50914]/60 hover:bg-[#B20710] hover:-translate-y-1 transform transition-all duration-200">
+                ✏️ Edit
+              </a>
+
+              <!-- Delete Button -->
+              <a href="/delete/<%= user._id %>" 
+                 class="flex-1 text-center px-3 py-2 bg-[#8B0000] text-white rounded-lg text-sm font-semibold shadow-md hover:shadow-lg hover:shadow-[#E50914]/50 hover:bg-[#E50914] hover:-translate-y-1 transform transition-all duration-200">
+                🗑️ Delete
+              </a>
+            </div>
+          </div>
+
+        </div>
+      <% }) %>
+    </div>
+
+  </body>
+</html>
