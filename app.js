@@ -1,8 +1,18 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const userModel = require('./models/user');
+const mongoose = require('mongoose');
+const userModel = require('./models/user'); // local user.js
 
+// MongoDB local connection
+mongoose.connect("mongodb://127.0.0.1:27017/testapp1", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB connected locally"))
+.catch(err => console.log("MongoDB connection error:", err));
+
+// View engine & middleware
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -84,5 +94,5 @@ app.get('/delete/:id', async (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
