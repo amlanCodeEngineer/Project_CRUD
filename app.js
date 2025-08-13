@@ -28,7 +28,6 @@ app.post('/create', async (req, res) => {
     try {
         const { name, email, imageURL } = req.body;
 
-        // Validation
         if (!name || !email) {
             return res.render('index', { error: "Name and Email are mandatory!", name, email, imageURL });
         }
@@ -36,7 +35,7 @@ app.post('/create', async (req, res) => {
         await userModel.create({ name, email, imageURL });
         res.redirect('/read');
     } catch (err) {
-        if (err.code === 11000) { // duplicate email
+        if (err.code === 11000) {
             return res.render('index', { error: "Email already exists!", ...req.body });
         }
         res.status(500).send("Something went wrong!");
@@ -58,7 +57,6 @@ app.post('/update/:userid', async (req, res) => {
     try {
         const { name, email, imageURL } = req.body;
 
-        // Validation
         if (!name || !email) {
             const user = await userModel.findById(req.params.userid);
             return res.render('edit', { error: "Name and Email are mandatory!", user });
@@ -67,7 +65,7 @@ app.post('/update/:userid', async (req, res) => {
         await userModel.findByIdAndUpdate(req.params.userid, { name, email, imageURL });
         res.redirect('/read');
     } catch (err) {
-        if (err.code === 11000) { // duplicate email
+        if (err.code === 11000) {
             const user = await userModel.findById(req.params.userid);
             return res.render('edit', { error: "Email already exists!", user });
         }
